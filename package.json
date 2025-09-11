@@ -1,6 +1,6 @@
 {
   "name": "@fizzwiz/ensemble",
-  "version": "0.0.0-0",
+  "version": "0.0.0-dev.0",
   "description": "A framework for live interactions — not just actions.",
   "repository": {
     "type": "git",
