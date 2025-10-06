@@ -28,18 +28,18 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Solo<span class="signature">(name<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Solo<span class="signature">()</span><span class="type-signature"></span></h2>
         
             <div class="class-description"><h2>Solo 🎭</h2>
 <p>A <code>Solo</code> is a self-contained, modular unit of reactive logic.</p>
-<p>Like a solo performer on stage, it listens to events from other players
-and reacts accordingly. Internally, it manages:</p>
+<p>It aggregates three types of internal players:</p>
 <ul>
-<li>Cues: reactive listeners to events</li>
-<li>Ostinatos: repeating, infinite or finite tasks</li>
+<li><strong>Cues</strong>: reactive listeners to external events</li>
+<li><strong>Ostinatos</strong>: repeating, infinite or finite tasks</li>
+<li><strong>Tickets</strong>: time-limited objects affecting the behavior (e.g. OTPs)</li>
 </ul>
-<p><code>play()</code> and <code>pause()</code> start or stop all internal players.
-The source emitters are <strong>unaffected</strong>; only the internal tasks are toggled.</p></div>
+<p>Calling <code>play()</code> or <code>pause()</code> on a Solo toggles all its internal players.
+External source emitters are unaffected; only the internal players are controlled.</p></div>
         
     
 </header>
@@ -54,13 +54,23 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
     
 
     
-    <h4 class="name" id="Solo"><span class="type-signature"></span>new Solo<span class="signature">(name<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Solo"><span class="type-signature"></span>new Solo<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
 
 
 
+<div class="description">
+    <p>Creates a new Solo instance.</p>
+<p>Initializes three internal ensembles to manage:</p>
+<ul>
+<li><code>cues</code>: reactive event listeners</li>
+<li><code>ostinatos</code>: repeating tasks</li>
+<li><code>tickets</code>: time-limited objects</li>
+</ul>
+<p>These internal ensembles are automatically managed by <code>play()</code> and <code>pause()</code>.</p>
+</div>
 
 
 
@@ -68,66 +78,6 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
 
 
 
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>Optional name if this Solo is added to a parent Ensemble</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -348,6 +298,73 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
 
 
         
+            
+<h4 class="name" id="tickets"><span class="type-signature"></span>tickets<span class="type-signature"> :<a href="Ensemble.html">Ensemble</a>.&lt;<a href="Ticket.html">Ticket</a>></span></h4>
+
+
+
+
+<div class="description">
+    <p>Internal collection of Tickets</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Ensemble.html">Ensemble</a>.&lt;<a href="Ticket.html">Ticket</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
     
 
     
@@ -460,7 +477,7 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
 
             
 
-            <td class="description last"><p>Source emitter</p></td>
+            <td class="description last"><p>Source emitter to listen on</p></td>
         </tr>
 
     
@@ -491,7 +508,7 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
 
             
 
-            <td class="description last"><p>Event name</p></td>
+            <td class="description last"><p>Event name to listen for</p></td>
         </tr>
 
     
@@ -522,7 +539,7 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
 
             
 
-            <td class="description last"><p>Listener callback</p></td>
+            <td class="description last"><p>Callback invoked when the event occurs</p></td>
         </tr>
 
     
@@ -555,7 +572,7 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
 
             
 
-            <td class="description last"><p>Optional options for the Cue</p></td>
+            <td class="description last"><p>Optional configuration for the Cue</p></td>
         </tr>
 
     
@@ -619,6 +636,10 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    <p>Returns the Solo instance for chaining</p>
+</div>
+
 
 
 <dl>
@@ -756,7 +777,7 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
                 </td>
             
 
-            <td class="description last"><p>Task function to repeat</p></td>
+            <td class="description last"><p>Function to repeat</p></td>
         </tr>
 
     
@@ -829,12 +850,12 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
             
                 <td class="default">
                 
-                    100
+                    1000
                 
                 </td>
             
 
-            <td class="description last"><p>Base delay in milliseconds</p></td>
+            <td class="description last"><p>Base delay in milliseconds between repetitions</p></td>
         </tr>
 
     
@@ -912,7 +933,7 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
                 </td>
             
 
-            <td class="description last"><p>Maximum delay</p></td>
+            <td class="description last"><p>Maximum delay allowed</p></td>
         </tr>
 
     
@@ -976,6 +997,254 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    <p>Returns the Solo instance for chaining</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">this</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="ticket"><span class="type-signature"></span>ticket<span class="signature">(name, endTime, exit<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {this}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Adds a Ticket (time-limited Player) to this Solo.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Name of the Ticket</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>endTime</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Expiration timestamp in milliseconds</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>exit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last"><p>Whether to remove the Ticket from the Ensemble upon expiration</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Returns the Solo instance for chaining</p>
+</div>
+
 
 
 <dl>
@@ -1018,7 +1287,7 @@ The source emitters are <strong>unaffected</strong>; only the internal tasks are
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Oct 06 2025 11:24:07 GMT+0200 (Ora legale dell’Europa centrale)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Oct 06 2025 13:36:39 GMT+0200 (Ora legale dell’Europa centrale)
 </footer>
 
 <script> prettyPrint(); </script>

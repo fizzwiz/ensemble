@@ -3,7 +3,7 @@ import { Player } from "../core/Player.js";
 /**
  * Ticket 🎟️
  * 
- * A Player with a limited lifetime. 
+ * A Player with a limited lifetime (e.g. an OTP).  
  * Once its lifetime expires, it pauses itself automatically and optionally removes itself from its ensemble.
  */
 export class Ticket extends Player {
@@ -18,10 +18,10 @@ export class Ticket extends Player {
   timeout;
 
   /**
+   * @param {number} [endTime] Expiration timestamp
    * @param {boolean} [exit=true] Remove from ensemble when expired
-   * @param {number} [endTime=Date.now()] Expiration timestamp
    */
-  constructor(exit = true, endTime = Date.now()) {
+  constructor(endTime, exit = true) {
     super();
     this.endTime = endTime;
     this.exit = exit;
