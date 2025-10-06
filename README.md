@@ -1,4 +1,4 @@
-# @fizzwiz/ensemble
+# 🎶 @fizzwiz/ensemble
 
 **A framework for live interactions — not just actions.**
 

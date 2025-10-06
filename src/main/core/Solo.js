@@ -1,68 +1,72 @@
-import { Cue } from "./Cue.js";
-import { Player } from "./Player.js";
 import { Ensemble } from './Ensemble.js';
+import { Cue } from "../player/Cue.js";
+import { Ostinato } from "../player/Ostinato.js";
 
 /**
- * Solo
- * ----
+ * Solo 🎭
+ * -----
  * A `Solo` is a self-contained, modular unit of reactive logic.
  *
  * Like a solo performer on stage, it listens to events from other players
- * and reacts accordingly. Internally, it manages a collection of `Cue` instances
- * through an `Ensemble`. A Solo may also maintain internal state and emit custom
- * events to represent state transitions.
+ * and reacts accordingly. Internally, it manages:
+ * - Cues: reactive listeners to events
+ * - Ostinatos: repeating, infinite or finite tasks
  *
- * ### Key Concepts:
- * - `cue(...)` creates a `Cue` that listens to a source emitter and reacts.
- * - All cues are stored in the internal `cues` ensemble.
- * - `play()` and `pause()` start or stop all internal cues.
- *
- * The source emitters are **unaffected** by play/pause; only the cue listeners are toggled.
+ * `play()` and `pause()` start or stop all internal players.
+ * The source emitters are **unaffected**; only the internal tasks are toggled.
  */
-
-export class Solo extends Player {
-
-  /** 
-   * Internal collection of cues 
-   * @type {Ensemble} 
-   */
-  cues;
+export class Solo extends Ensemble {
 
   /**
-   * @param {Ensemble} cues - A container (e.g., Ensemble) managing the Cue instances
+   * @param {string} [name] Optional name if this Solo is added to a parent Ensemble
    */
-  constructor(cues = new Ensemble()) {
+  constructor(name) {
     super();
-    this.cues = cues;
+    if (name) this.name = name;
+
+    // Internal ensembles for cues and ostinatos
+    this.add('cues', new Ensemble())
+        .add('ostinatos', new Ensemble());
+  }
+
+  /** @type {Ensemble<Cue>} Internal collection of Cues */
+  get cues() {
+    return this.get('cues');
+  }
+
+  /** @type {Ensemble<Ostinato>} Internal collection of Ostinatos */
+  get ostinatos() {
+    return this.get('ostinatos');
   }
 
   /**
-   * Adds a new Cue to the Solo.
+   * Adds a new Cue to this Solo.
    *
-   * @param {EventEmitter} srcEmitter - The source emitter to listen on.
-   * @param {string} srcEventName - The event name to listen for.
-   * @param {function(...args) : any} listener - The listener reacting to the event.
-   * @param {string} [cueName] - Optional name for the Cue; auto-generated if omitted.
-   */
-  cue(srcEmitter, srcEventName, listener, opts, cueName = this.cues.uniqueName()) {
-    this.cues.add(new Cue(srcEmitter, srcEventName, listener, opts), cueName);
-  }
-
-  /**
-   * Starts all internal cues (listeners).
+   * @param {string} cueName Name of the Cue
+   * @param {EventEmitter} srcEmitter Source emitter
+   * @param {string} srcEventName Event name
+   * @param {Function} listener Listener callback
+   * @param {object} [opts] Optional options for the Cue
    * @returns {this}
    */
-  play() {
-    this.cues.play();
+  cue(cueName, srcEmitter, srcEventName, listener, opts) {
+    this.cues.add(cueName, new Cue(srcEmitter, srcEventName, listener, opts));
     return this;
   }
 
   /**
-   * Stops all internal cues (listeners).
+   * Adds a repeating task (Ostinato) to this Solo.
+   *
+   * @param {string} name Name of the Ostinato
+   * @param {Function} refrain Task function to repeat
+   * @param {number} [nTimes=Infinity] Number of repetitions
+   * @param {number} [baseDelay=100] Base delay in milliseconds
+   * @param {number} [factor=1] Scaling factor for dynamic delays
+   * @param {number} [maxDelay=Infinity] Maximum delay
    * @returns {this}
    */
-  pause() {
-    this.cues.pause();
+  ostinato(name, refrain, nTimes = Infinity, baseDelay = 100, factor = 1, maxDelay = Infinity) {
+    this.ostinatos.add(name, new Ostinato(refrain, nTimes, baseDelay, factor, maxDelay));
     return this;
   }
 }

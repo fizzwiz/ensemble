@@ -1,8 +1,8 @@
 import { Player } from './core/Player.js';
-import { Cue } from './core/Cue.js';
 import { Ensemble } from './core/Ensemble.js';
 import { Event } from './core/Event.js';
-import { Secondo } from './core/Secondo.js';
+import { Cue } from './player/Cue.js';
+import { Secondo } from './player/Secondo.js';
 import {
   ObserverSecondo,
   MutationObserverSecondo,
@@ -11,7 +11,8 @@ import {
 } from './secondo/ObserverSecondo.js';
 import { EmitterSecondo } from './secondo/EmitterSecondo.js';
 import { Solo } from './core/Solo.js';
-import { TicketPlayer } from './player/TicketPlayer.js';
+import { Ticket } from './player/Ticket.js';
+import { Ostinato } from './player/Ostinato.js';
 
 export {
   Player,
@@ -25,7 +26,8 @@ export {
   ResizeObserverSecondo,
   EmitterSecondo,
   Solo,
-  TicketPlayer
+  Ticket,
+  Ostinato
 };
 
 /**
@@ -36,10 +38,8 @@ export {
  * These classes form the "score" on which other parts of the system perform:
  *
  * - {@link Player} — The base performer with a lifecycle (`play()`, `pause()`).
- * - {@link Cue} — A note in time: listens to an external source and triggers reactions.
  * - {@link Ensemble} — A group of players performing together in coordination.
  * - {@link Event} — A rich event object that tracks origin and propagation.
- * - {@link Secondo} — A player that echoes/adapts events from external sources.
  * - {@link Solo} — A self-contained performer orchestrating internal cues like a miniature ensemble.
  * @module core
  */
@@ -60,6 +60,9 @@ export {
 */
 
 /**
- * - {@link TicketPlayer}
+ * - {@link Secondo} — A player that echoes/adapts events from external sources.
+ * - {@link Cue} — A note in time: listens to an external source and triggers reactions.
+ * - {@link Ticket}
+ * - {@link Ostinato}
  * @module player
  */

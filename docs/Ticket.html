@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: ObserverSecondo</title>
+    <title>JSDoc: Class: Ticket</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: ObserverSecondo</h1>
+    <h1 class="page-title">Class: Ticket</h1>
 
     
 
@@ -28,16 +28,11 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>ObserverSecondo<span class="signature">(observed, opts<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Ticket<span class="signature">(exit<span class="signature-attributes">opt</span>, endTime<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description"><p>Abstract base class for all DOM observer Secondos.
-Converts low-level observer callbacks into Ensemble events.</p>
-<p>Responsibilities:</p>
-<ul>
-<li>Holds one or more observed DOM nodes.</li>
-<li>Provides lifecycle methods to play/pause observation.</li>
-<li>Delegates concrete observer instantiation to subclasses.</li>
-</ul></div>
+            <div class="class-description"><p>Ticket 🎟️</p>
+<p>A Player with a limited lifetime.
+Once its lifetime expires, it pauses itself automatically and optionally removes itself from its ensemble.</p></div>
         
     
 </header>
@@ -52,7 +47,7 @@ Converts low-level observer callbacks into Ensemble events.</p>
     
 
     
-    <h4 class="name" id="ObserverSecondo"><span class="type-signature"></span>new ObserverSecondo<span class="signature">(observed, opts<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Ticket"><span class="type-signature"></span>new Ticket<span class="signature">(exit<span class="signature-attributes">opt</span>, endTime<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -96,51 +91,13 @@ Converts low-level observer callbacks into Ensemble events.</p>
 
         <tr>
             
-                <td class="name"><code>observed</code></td>
+                <td class="name"><code>exit</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Node</span>
-|
-
-<span class="param-type">Array.&lt;Node></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>Single or multiple DOM nodes to observe.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>opts</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
+<span class="param-type">boolean</span>
 
 
             
@@ -161,12 +118,51 @@ Converts low-level observer callbacks into Ensemble events.</p>
             
                 <td class="default">
                 
-                    {}
+                    true
                 
                 </td>
             
 
-            <td class="description last"><p>Options passed to the observer (ignored by some observers).</p></td>
+            <td class="description last"><p>Remove from ensemble when expired</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>endTime</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    Date.now()
+                
+                </td>
+            
+
+            <td class="description last"><p>Expiration timestamp</p></td>
         </tr>
 
     
@@ -243,7 +239,7 @@ Converts low-level observer callbacks into Ensemble events.</p>
         <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            <dt><a href="ObserverSecondo.html">ObserverSecondo</a></dt>
+            <dt><a href="Ticket.html">Ticket</a></dt>
             <dd></dd>
         </dl>
     
@@ -259,76 +255,13 @@ Converts low-level observer callbacks into Ensemble events.</p>
 
         
             
-<h4 class="name" id="observed"><span class="type-signature"></span>observed<span class="type-signature"> :Array.&lt;Node></span></h4>
-
-
-
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Array.&lt;Node></span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="observer"><span class="type-signature"></span>observer<span class="type-signature"></span></h4>
+<h4 class="name" id="endTime"><span class="type-signature"></span>endTime<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    <p>Returns the underlying observer instance.</p>
+    <p>Expiration timestamp in milliseconds</p>
 </div>
 
 
@@ -379,22 +312,16 @@ Converts low-level observer callbacks into Ensemble events.</p>
 
         
             
-<h4 class="name" id="opts"><span class="type-signature"></span>opts<span class="type-signature"> :object</span></h4>
+<h4 class="name" id="exit"><span class="type-signature"></span>exit<span class="type-signature"></span></h4>
 
 
 
 
+<div class="description">
+    <p>Whether to remove from ensemble upon expiration</p>
+</div>
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">object</span>
-
-
-        </li>
-    </ul>
 
 
 
@@ -442,22 +369,16 @@ Converts low-level observer callbacks into Ensemble events.</p>
 
         
             
-<h4 class="name" id="playing"><span class="type-signature"></span>playing<span class="type-signature"> :boolean</span></h4>
+<h4 class="name" id="timeout"><span class="type-signature"></span>timeout<span class="type-signature"></span></h4>
 
 
 
 
+<div class="description">
+    <p>Timeout ID for automatic expiration</p>
+</div>
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">boolean</span>
-
-
-        </li>
-    </ul>
 
 
 
@@ -505,31 +426,16 @@ Converts low-level observer callbacks into Ensemble events.</p>
 
         
             
-<h4 class="name" id="primo"><span class="type-signature"></span>primo<span class="type-signature"> :MutationObserver|IntersectionObserver|ResizeObserver|null</span></h4>
+<h4 class="name" id="ttl"><span class="type-signature"></span>ttl<span class="type-signature"></span></h4>
 
 
 
 
+<div class="description">
+    <p>Remaining lifetime in milliseconds</p>
+</div>
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">MutationObserver</span>
-|
-
-<span class="param-type">IntersectionObserver</span>
-|
-
-<span class="param-type">ResizeObserver</span>
-|
-
-<span class="param-type">null</span>
-
-
-        </li>
-    </ul>
 
 
 
@@ -587,7 +493,7 @@ Converts low-level observer callbacks into Ensemble events.</p>
     
 
     
-    <h4 class="name" id="connectObserver"><span class="type-signature"></span>connectObserver<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="handleExpiration"><span class="type-signature"></span>handleExpiration<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -595,7 +501,7 @@ Converts low-level observer callbacks into Ensemble events.</p>
 
 
 <div class="description">
-    <p>Connects the observer to all target nodes.</p>
+    <p>Handle automatic expiration of the Ticket</p>
 </div>
 
 
@@ -670,7 +576,7 @@ Converts low-level observer callbacks into Ensemble events.</p>
     
 
     
-    <h4 class="name" id="disconnectObserver"><span class="type-signature"></span>disconnectObserver<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="pause"><span class="type-signature"></span>pause<span class="signature">()</span><span class="type-signature"> &rarr; {this}</span></h4>
     
 
     
@@ -678,7 +584,7 @@ Converts low-level observer callbacks into Ensemble events.</p>
 
 
 <div class="description">
-    <p>Disconnects the observer from all target nodes.</p>
+    <p>Pause the Ticket and cancel automatic expiration</p>
 </div>
 
 
@@ -742,119 +648,24 @@ Converts low-level observer callbacks into Ensemble events.</p>
 
 
 
-
-
-
-
+<h5>Returns:</h5>
 
         
-            
 
-    
-
-    
-    <h4 class="name" id="instantiateObserver"><span class="type-signature">(abstract) </span>instantiateObserver<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Abstract method to instantiate the concrete observer.
-Must assign the observer to <code>this.primo</code>.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
 
 <dl>
     <dt>
-        <div class="param-desc">
-        <p>if not implemented by subclass.</p>
-        </div>
+        Type
     </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
+    <dd>
+        
+<span class="param-type">this</span>
 
 
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
+    </dd>
 </dl>
 
-
     
-
-
 
 
 
@@ -866,7 +677,7 @@ Must assign the observer to <code>this.primo</code>.</p>
     
 
     
-    <h4 class="name" id="pause"><span class="type-signature"></span>pause<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="play"><span class="type-signature"></span>play<span class="signature">()</span><span class="type-signature"> &rarr; {this}</span></h4>
     
 
     
@@ -874,7 +685,7 @@ Must assign the observer to <code>this.primo</code>.</p>
 
 
 <div class="description">
-    <p>Stops the observation process.</p>
+    <p>Start the Ticket and schedule automatic expiration</p>
 </div>
 
 
@@ -938,119 +749,174 @@ Must assign the observer to <code>this.primo</code>.</p>
 
 
 
-
-
-
-
+<h5>Returns:</h5>
 
         
-            
 
-    
-
-    
-    <h4 class="name" id="play"><span class="type-signature"></span>play<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Starts the observation process.
-Instantiates the observer if not yet created.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
 
 <dl>
     <dt>
-        <div class="param-desc">
-        <p>if no target nodes are defined.</p>
-        </div>
+        Type
     </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">Error</span>
+    <dd>
+        
+<span class="param-type">this</span>
 
 
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
+    </dd>
 </dl>
-
 
     
 
 
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="ttl"><span class="type-signature"></span>ttl<span class="signature">(ttl)</span><span class="type-signature"> &rarr; {this}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Extend the remaining lifetime of this Ticket.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ttl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Time to live in milliseconds</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">this</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 

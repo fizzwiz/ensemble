@@ -28,21 +28,18 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Solo<span class="signature">(cues)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Solo<span class="signature">(name<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description"><h2>Solo</h2>
+            <div class="class-description"><h2>Solo 🎭</h2>
 <p>A <code>Solo</code> is a self-contained, modular unit of reactive logic.</p>
 <p>Like a solo performer on stage, it listens to events from other players
-and reacts accordingly. Internally, it manages a collection of <code>Cue</code> instances
-through an <code>Ensemble</code>. A Solo may also maintain internal state and emit custom
-events to represent state transitions.</p>
-<h3>Key Concepts:</h3>
+and reacts accordingly. Internally, it manages:</p>
 <ul>
-<li><code>cue(...)</code> creates a <code>Cue</code> that listens to a source emitter and reacts.</li>
-<li>All cues are stored in the internal <code>cues</code> ensemble.</li>
-<li><code>play()</code> and <code>pause()</code> start or stop all internal cues.</li>
+<li>Cues: reactive listeners to events</li>
+<li>Ostinatos: repeating, infinite or finite tasks</li>
 </ul>
-<p>The source emitters are <strong>unaffected</strong> by play/pause; only the cue listeners are toggled.</p></div>
+<p><code>play()</code> and <code>pause()</code> start or stop all internal players.
+The source emitters are <strong>unaffected</strong>; only the internal tasks are toggled.</p></div>
         
     
 </header>
@@ -57,7 +54,7 @@ events to represent state transitions.</p>
     
 
     
-    <h4 class="name" id="Solo"><span class="type-signature"></span>new Solo<span class="signature">(cues)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Solo"><span class="type-signature"></span>new Solo<span class="signature">(name<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -85,6 +82,8 @@ events to represent state transitions.</p>
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -97,23 +96,33 @@ events to represent state transitions.</p>
 
         <tr>
             
-                <td class="name"><code>cues</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="Ensemble.html">Ensemble</a></span>
+<span class="param-type">string</span>
 
 
             
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"><p>A container (e.g., Ensemble) managing the Cue instances</p></td>
+            <td class="description last"><p>Optional name if this Solo is added to a parent Ensemble</p></td>
         </tr>
 
     
@@ -206,13 +215,13 @@ events to represent state transitions.</p>
 
         
             
-<h4 class="name" id="cues"><span class="type-signature"></span>cues<span class="type-signature"> :<a href="Ensemble.html">Ensemble</a></span></h4>
+<h4 class="name" id="cues"><span class="type-signature"></span>cues<span class="type-signature"> :<a href="Ensemble.html">Ensemble</a>.&lt;<a href="Cue.html">Cue</a>></span></h4>
 
 
 
 
 <div class="description">
-    <p>Internal collection of cues</p>
+    <p>Internal collection of Cues</p>
 </div>
 
 
@@ -221,7 +230,74 @@ events to represent state transitions.</p>
     <ul>
         <li>
             
-<span class="param-type"><a href="Ensemble.html">Ensemble</a></span>
+<span class="param-type"><a href="Ensemble.html">Ensemble</a>.&lt;<a href="Cue.html">Cue</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="ostinatos"><span class="type-signature"></span>ostinatos<span class="type-signature"> :<a href="Ensemble.html">Ensemble</a>.&lt;<a href="Ostinato.html">Ostinato</a>></span></h4>
+
+
+
+
+<div class="description">
+    <p>Internal collection of Ostinatos</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Ensemble.html">Ensemble</a>.&lt;<a href="Ostinato.html">Ostinato</a>></span>
 
 
         </li>
@@ -283,7 +359,7 @@ events to represent state transitions.</p>
     
 
     
-    <h4 class="name" id="cue"><span class="type-signature"></span>cue<span class="signature">(srcEmitter, srcEventName, listener, cueName<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="cue"><span class="type-signature"></span>cue<span class="signature">(cueName, srcEmitter, srcEventName, listener, opts<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {this}</span></h4>
     
 
     
@@ -291,7 +367,7 @@ events to represent state transitions.</p>
 
 
 <div class="description">
-    <p>Adds a new Cue to the Solo.</p>
+    <p>Adds a new Cue to this Solo.</p>
 </div>
 
 
@@ -329,6 +405,37 @@ events to represent state transitions.</p>
 
         <tr>
             
+                <td class="name"><code>cueName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Name of the Cue</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>srcEmitter</code></td>
             
 
@@ -353,7 +460,7 @@ events to represent state transitions.</p>
 
             
 
-            <td class="description last"><p>The source emitter to listen on.</p></td>
+            <td class="description last"><p>Source emitter</p></td>
         </tr>
 
     
@@ -384,7 +491,7 @@ events to represent state transitions.</p>
 
             
 
-            <td class="description last"><p>The event name to listen for.</p></td>
+            <td class="description last"><p>Event name</p></td>
         </tr>
 
     
@@ -415,20 +522,20 @@ events to represent state transitions.</p>
 
             
 
-            <td class="description last"><p>The listener reacting to the event.</p></td>
+            <td class="description last"><p>Listener callback</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>cueName</code></td>
+                <td class="name"><code>opts</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">object</span>
 
 
             
@@ -448,95 +555,12 @@ events to represent state transitions.</p>
 
             
 
-            <td class="description last"><p>Optional name for the Cue; auto-generated if omitted.</p></td>
+            <td class="description last"><p>Optional options for the Cue</p></td>
         </tr>
 
     
     </tbody>
 </table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="pause"><span class="type-signature"></span>pause<span class="signature">()</span><span class="type-signature"> &rarr; {this}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Stops all internal cues (listeners).</p>
-</div>
-
-
-
-
-
-
-
 
 
 
@@ -621,7 +645,7 @@ events to represent state transitions.</p>
     
 
     
-    <h4 class="name" id="play"><span class="type-signature"></span>play<span class="signature">()</span><span class="type-signature"> &rarr; {this}</span></h4>
+    <h4 class="name" id="ostinato"><span class="type-signature"></span>ostinato<span class="signature">(name, refrain, nTimes<span class="signature-attributes">opt</span>, baseDelay<span class="signature-attributes">opt</span>, factor<span class="signature-attributes">opt</span>, maxDelay<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {this}</span></h4>
     
 
     
@@ -629,7 +653,7 @@ events to represent state transitions.</p>
 
 
 <div class="description">
-    <p>Starts all internal cues (listeners).</p>
+    <p>Adds a repeating task (Ostinato) to this Solo.</p>
 </div>
 
 
@@ -638,6 +662,262 @@ events to represent state transitions.</p>
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Name of the Ostinato</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>refrain</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Task function to repeat</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nTimes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    Infinity
+                
+                </td>
+            
+
+            <td class="description last"><p>Number of repetitions</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>baseDelay</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    100
+                
+                </td>
+            
+
+            <td class="description last"><p>Base delay in milliseconds</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>factor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last"><p>Scaling factor for dynamic delays</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>maxDelay</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    Infinity
+                
+                </td>
+            
+
+            <td class="description last"><p>Maximum delay</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -732,13 +1012,13 @@ events to represent state transitions.</p>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core.html">core</a></li><li><a href="module-player.html">player</a></li><li><a href="module-secondo.html">secondo</a></li></ul><h3>Classes</h3><ul><li><a href="Cue.html">Cue</a></li><li><a href="EmitterSecondo.html">EmitterSecondo</a></li><li><a href="Ensemble.html">Ensemble</a></li><li><a href="Event.html">Event</a></li><li><a href="IntersectionObserverSecondo.html">IntersectionObserverSecondo</a></li><li><a href="MutationObserverSecondo.html">MutationObserverSecondo</a></li><li><a href="ObserverSecondo.html">ObserverSecondo</a></li><li><a href="Player.html">Player</a></li><li><a href="ResizeObserverSecondo.html">ResizeObserverSecondo</a></li><li><a href="Secondo.html">Secondo</a></li><li><a href="Solo.html">Solo</a></li><li><a href="TicketPlayer.html">TicketPlayer</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core.html">core</a></li><li><a href="module-player.html">player</a></li><li><a href="module-secondo.html">secondo</a></li></ul><h3>Classes</h3><ul><li><a href="Cue.html">Cue</a></li><li><a href="EmitterSecondo.html">EmitterSecondo</a></li><li><a href="Ensemble.html">Ensemble</a></li><li><a href="Event.html">Event</a></li><li><a href="IntersectionObserverSecondo.html">IntersectionObserverSecondo</a></li><li><a href="MutationObserverSecondo.html">MutationObserverSecondo</a></li><li><a href="ObserverSecondo.html">ObserverSecondo</a></li><li><a href="Ostinato.html">Ostinato</a></li><li><a href="Player.html">Player</a></li><li><a href="ResizeObserverSecondo.html">ResizeObserverSecondo</a></li><li><a href="Secondo.html">Secondo</a></li><li><a href="Solo.html">Solo</a></li><li><a href="Ticket.html">Ticket</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Sep 11 2025 20:11:46 GMT+0200 (Ora legale dell’Europa centrale)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Oct 06 2025 11:24:07 GMT+0200 (Ora legale dell’Europa centrale)
 </footer>
 
 <script> prettyPrint(); </script>

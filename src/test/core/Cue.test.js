@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha';
 import assert from 'assert';
 import EventEmitter from 'events';
-import { Cue } from '../../main/core/Cue.js'; // Adjust the path as needed
+import { Cue } from '../../main/player/Cue.js'; // Adjust the path as needed
 
 describe('Cue', () => {
   it('should resolve when predicate returns a truthy value', async () => {

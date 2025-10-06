@@ -1,4 +1,4 @@
-import { Player } from "./Player.js";
+import { Player } from "../core/Player.js";
 
 /**
  * Cue represents the engagement between an event emitter (e.g., DOM, WebSocket, Node.js EventEmitter)

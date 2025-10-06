@@ -1,5 +1,4 @@
 import { Player } from './Player.js';
-import crypto from 'crypto';
 
 /**
  * Represents a composite asynchronous behavior composed of multiple Players.
@@ -18,12 +17,12 @@ export class Ensemble extends Player {
    * Adds a Player to this Ensemble with a unique name.
    * The Player's `name` and `ensemble` properties are set automatically.
    *
-   * @param {Player} player - The Player instance to add.
    * @param {string} name - The unique name within this ensemble.
+   * @param {Player} player - The Player instance to add.
    * @throws {Error} If the name already exists.
    * @returns {Ensemble} This ensemble for chaining.
    */
-  add(player, name = this.uniqueName()) {
+  add(name, player) {
 
     if (this.players.has(name)) {
       throw new Error(`A Player with the name "${name}" is already in this Ensemble.`);
@@ -46,7 +45,7 @@ export class Ensemble extends Player {
     if (!got && creating) {
       got = new Ensemble();
       if (this.playing) got.play();
-      this.add(got, name);
+      this.add(name, got);
     }
     return got;
   }
@@ -94,7 +93,7 @@ export class Ensemble extends Player {
 
     if (got) {
       this.remove(name);
-      this.add(got, name);      
+      this.add(name, got);      
     }
 
     return got;
@@ -123,21 +122,7 @@ export class Ensemble extends Player {
     }
 
     return trimmed;
-  }
-
-  /**
-   * Generates a unique name that doesn't conflict with existing ones.
-   *
-   * @returns {string}
-   */
-  uniqueName() {
-    let id;
-    do {
-      id = crypto.randomUUID();
-    } while (this.players.has(id));
-    return id;
-  }
-  
+  }  
 
   /**
    * Returns all players rooted by this Ensemble, recursively.

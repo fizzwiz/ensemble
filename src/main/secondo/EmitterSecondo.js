@@ -1,5 +1,5 @@
-import { Secondo } from '../core/Secondo.js';
-import { Cue } from '../core/Cue.js';
+import { Secondo } from '../player/Secondo.js';
+import { Cue } from '../player/Cue.js';
 import { Event } from '../core/Event.js';
 
 /**

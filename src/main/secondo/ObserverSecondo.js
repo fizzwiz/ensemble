@@ -1,4 +1,4 @@
-import { Secondo } from "../core/Secondo.js";
+import { Secondo } from "../player/Secondo.js";
 import { Event } from "../core/Event.js";
 
 /**

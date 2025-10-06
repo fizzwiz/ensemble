@@ -12,7 +12,7 @@ describe('Ensemble', () => {
 
   it('should add and get a player by name', () => {
     const player = new Player();
-    ensemble.add(player, 'a');
+    ensemble.add('a', player);
     const got = ensemble.get('a');
     assert.strictEqual(got, player);
     assert.strictEqual(got.name, 'a');
@@ -22,8 +22,8 @@ describe('Ensemble', () => {
   it('should throw when adding a player with duplicate name', () => {
     const p1 = new Player();
     const p2 = new Player();
-    ensemble.add(p1, 'dup');
-    assert.throws(() => ensemble.add( p2, 'dup'), /already in this Ensemble/);
+    ensemble.add('dup', p1);
+    assert.throws(() => ensemble.add('dup', p2), /already in this Ensemble/);
   });
 
   it('should create nested Ensemble if `creating` is true in get()', () => {
@@ -34,7 +34,7 @@ describe('Ensemble', () => {
 
   it('should remove a player', () => {
     const player = new Player();
-    ensemble.add(player, 'a');
+    ensemble.add('a', player);
     const removed = ensemble.remove('a');
     assert.strictEqual(removed, true);
     assert.strictEqual(player.ensemble, undefined);
@@ -45,8 +45,8 @@ describe('Ensemble', () => {
   it('should rotate players in round-robin', () => {
     const p1 = new Player();
     const p2 = new Player();
-    ensemble.add(p1, 'one');
-    ensemble.add(p2, 'two');
+    ensemble.add('one', p1);
+    ensemble.add('two', p2);
 
     const first = ensemble.rotate();
     assert.strictEqual(first, p1);
@@ -56,8 +56,8 @@ describe('Ensemble', () => {
   it('should rotate a player by name', () => {
     const p1 = new Player();
     const p2 = new Player();
-    ensemble.add(p1, 'a');
-    ensemble.add(p2, 'b');
+    ensemble.add('a', p1);
+    ensemble.add('b', p2);
 
     const rotated = ensemble.rotate('a');
     assert.strictEqual(rotated, p1);
@@ -69,20 +69,15 @@ describe('Ensemble', () => {
     const p2 = new Player();
     const p3 = new Player();
 
-    ensemble.add(p1, 'z');
-    ensemble.add(p2, 'x');
-    ensemble.add(p3, 'y');
+    // Flipped arguments: name first, player second
+    ensemble.add('z', p1);
+    ensemble.add('x', p2);
+    ensemble.add('y', p3);
 
     const trimmed = ensemble.sort(([a], [b]) => a.localeCompare(b), 2);
     assert.deepStrictEqual([...ensemble.players.keys()], ['x', 'y']);
     assert.strictEqual(trimmed.length, 1);
     assert.strictEqual(trimmed[0][0], 'z');
-  });
-
-  it('should generate a unique name not already used', () => {
-    const name = ensemble.uniqueName();
-    assert.strictEqual(typeof name, 'string');
-    assert(!ensemble.has(name));
   });
 
   it('should list descendants including nested ensembles', () => {
@@ -92,10 +87,10 @@ describe('Ensemble', () => {
     const nested = new Ensemble();
     const p3 = new Player();
 
-    root.add(p1, 'a');
-    root.add(nested, 'b');
-    nested.add(p2, 'c');
-    nested.add(p3, 'd');
+    root.add('a', p1);
+    root.add('b', nested);
+    nested.add('c', p2);
+    nested.add('d', p3);
 
     const all = root.descendants(true);
     assert.strictEqual(all.length, 4);
@@ -107,7 +102,7 @@ describe('Ensemble', () => {
   it('should play and pause all players', () => {
     const p1 = new Player();
     const p2 = new Player();
-    ensemble.add(p1, 'a').add(p2, 'b');
+    ensemble.add('a', p1).add('b', p2);
 
     ensemble.play();
     assert.strictEqual(p1.playing, true);
@@ -120,7 +115,7 @@ describe('Ensemble', () => {
 
   it('play() and pause() should not double-activate or deactivate', () => {
     const p = new Player();
-    ensemble.add(p, 'x');
+    ensemble.add('x', p);
     ensemble.play();
     ensemble.play();
     assert.strictEqual(p.playing, true);
