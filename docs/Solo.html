@@ -36,7 +36,7 @@
 <ul>
 <li><strong>Cues</strong>: reactive listeners to external events</li>
 <li><strong>Ostinatos</strong>: repeating, infinite or finite tasks</li>
-<li><strong>Tickets</strong>: time-limited objects affecting the behavior (e.g. OTPs)</li>
+<li><strong>Appointments</strong>: scheduled events that fire at specific times</li>
 </ul>
 <p>Calling <code>play()</code> or <code>pause()</code> on a Solo toggles all its internal players.
 External source emitters are unaffected; only the internal players are controlled.</p></div>
@@ -67,7 +67,7 @@ External source emitters are unaffected; only the internal players are controlle
 <ul>
 <li><code>cues</code>: reactive event listeners</li>
 <li><code>ostinatos</code>: repeating tasks</li>
-<li><code>tickets</code>: time-limited objects</li>
+<li><code>agenda</code>: scheduled appointments</li>
 </ul>
 <p>These internal ensembles are automatically managed by <code>play()</code> and <code>pause()</code>.</p>
 </div>
@@ -162,6 +162,63 @@ External source emitters are unaffected; only the internal players are controlle
 
     
         <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="agenda"><span class="type-signature"></span>agenda<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Internal Ensemble of Appointments</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
 
         
             
@@ -278,16 +335,188 @@ External source emitters are unaffected; only the internal players are controlle
 
 
         
-            
-<h4 class="name" id="tickets"><span class="type-signature"></span>tickets<span class="type-signature"></span></h4>
+    
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="appointment"><span class="type-signature"></span>appointment<span class="signature">(name, time, eventName, payload<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {this}</span></h4>
+    
+
+    
 
 
 
 <div class="description">
-    <p>Internal Ensemble of Tickets</p>
+    <p>Adds an Appointment (scheduled event) to this Solo's agenda.</p>
 </div>
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Name of the Appointment</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>time</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Timestamp in milliseconds when the appointment should fire</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>eventName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Event name to emit on trigger</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>payload</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Optional payload for the event</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -334,11 +563,41 @@ External source emitters are unaffected; only the internal players are controlle
 
 
 
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
         
-    
+<div class="param-desc">
+    <p>Returns the Solo instance for chaining</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">this</span>
+
+
+    </dd>
+</dl>
 
     
-        <h3 class="subsection-title">Methods</h3>
+
+
+
+
 
         
             
@@ -992,250 +1251,6 @@ External source emitters are unaffected; only the internal players are controlle
 
 
         
-            
-
-    
-
-    
-    <h4 class="name" id="ticket"><span class="type-signature"></span>ticket<span class="signature">(name, endTime, exit<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {this}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Adds a Ticket (time-limited Player) to this Solo.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>Name of the Ticket</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>endTime</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>Expiration timestamp in milliseconds</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>exit</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    true
-                
-                </td>
-            
-
-            <td class="description last"><p>Whether to remove the Ticket from the Ensemble upon expiration</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Returns the Solo instance for chaining</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">this</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
     
 
     
@@ -1251,13 +1266,13 @@ External source emitters are unaffected; only the internal players are controlle
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core.html">core</a></li><li><a href="module-player.html">player</a></li><li><a href="module-secondo.html">secondo</a></li></ul><h3>Classes</h3><ul><li><a href="Cue.html">Cue</a></li><li><a href="EmitterSecondo.html">EmitterSecondo</a></li><li><a href="Ensemble.html">Ensemble</a></li><li><a href="Event.html">Event</a></li><li><a href="IntersectionObserverSecondo.html">IntersectionObserverSecondo</a></li><li><a href="MutationObserverSecondo.html">MutationObserverSecondo</a></li><li><a href="ObserverSecondo.html">ObserverSecondo</a></li><li><a href="Ostinato.html">Ostinato</a></li><li><a href="Player.html">Player</a></li><li><a href="ResizeObserverSecondo.html">ResizeObserverSecondo</a></li><li><a href="Secondo.html">Secondo</a></li><li><a href="Solo.html">Solo</a></li><li><a href="Ticket.html">Ticket</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-core.html">core</a></li><li><a href="module-player.html">player</a></li><li><a href="module-secondo.html">secondo</a></li></ul><h3>Classes</h3><ul><li><a href="Appointment.html">Appointment</a></li><li><a href="Cue.html">Cue</a></li><li><a href="EmitterSecondo.html">EmitterSecondo</a></li><li><a href="Ensemble.html">Ensemble</a></li><li><a href="Event.html">Event</a></li><li><a href="IntersectionObserverSecondo.html">IntersectionObserverSecondo</a></li><li><a href="MutationObserverSecondo.html">MutationObserverSecondo</a></li><li><a href="ObserverSecondo.html">ObserverSecondo</a></li><li><a href="Ostinato.html">Ostinato</a></li><li><a href="Player.html">Player</a></li><li><a href="ResizeObserverSecondo.html">ResizeObserverSecondo</a></li><li><a href="Secondo.html">Secondo</a></li><li><a href="Solo.html">Solo</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Oct 06 2025 13:48:23 GMT+0200 (Ora legale dell’Europa centrale)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Oct 06 2025 19:56:40 GMT+0200 (Ora legale dell’Europa centrale)
 </footer>
 
 <script> prettyPrint(); </script>

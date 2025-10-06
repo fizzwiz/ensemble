@@ -1,8 +1,16 @@
+// Core abstractions
 import { Player } from './core/Player.js';
 import { Ensemble } from './core/Ensemble.js';
 import { Event } from './core/Event.js';
+import { Solo } from './core/Solo.js';
+
+// Player types
 import { Cue } from './player/Cue.js';
 import { Secondo } from './player/Secondo.js';
+import { Appointment } from './player/Appointment.js';
+import { Ostinato } from './player/Ostinato.js';
+
+// Secondo adapters
 import {
   ObserverSecondo,
   MutationObserverSecondo,
@@ -10,45 +18,47 @@ import {
   ResizeObserverSecondo
 } from './secondo/ObserverSecondo.js';
 import { EmitterSecondo } from './secondo/EmitterSecondo.js';
-import { Solo } from './core/Solo.js';
-import { Ticket } from './player/Ticket.js';
-import { Ostinato } from './player/Ostinato.js';
 
 export {
+  // Core
   Player,
-  Cue,
   Ensemble,
   Event,
+  Solo,
+
+  // Player types
+  Cue,
   Secondo,
+  Appointment,
+  Ostinato,
+
+  // Secondo adapters
   ObserverSecondo,
   MutationObserverSecondo,
   IntersectionObserverSecondo,
   ResizeObserverSecondo,
-  EmitterSecondo,
-  Solo,
-  Ticket,
-  Ostinato
+  EmitterSecondo
 };
 
 /**
- * 
- * 🎼 The `core` module defines the foundational abstractions
- * of the `@fizzwiz/ensemble` framework.
+ * 🎼 Core module
  *
+ * Provides the foundational abstractions of the `@fizzwiz/ensemble` framework.
  * These classes form the "score" on which other parts of the system perform:
  *
- * - {@link Player} — The base performer with a lifecycle (`play()`, `pause()`).
+ * - {@link Player} — Base performer with a lifecycle (`play()`, `pause()`).
  * - {@link Ensemble} — A group of players performing together in coordination.
- * - {@link Event} — A rich event object that tracks origin and propagation.
- * - {@link Solo} — A self-contained performer orchestrating internal cues like a miniature ensemble.
+ * - {@link Event} — Rich event objects that track origin and propagation.
+ * - {@link Solo} — Self-contained performer orchestrating internal cues like a miniature ensemble.
  * @module core
  */
 
 /**
- * 
- * 🎶 Secondos are adapter-players that integrate third-party or external event sources
- * into the Ensemble system. They listen to native or custom emitters and
- * re-broadcast their activity as Ensemble events propagated through hierarchies of Ensembles.
+ * 🎶 Secondos module
+ *
+ * Adapters that integrate third-party or external event sources into the Ensemble system.
+ * They listen to native or custom emitters and re-broadcast their activity as Ensemble events
+ * propagated through hierarchies of Ensembles.
  *
  * Variants include:
  * - {@link ObserverSecondo} — Base wrapper for observer APIs.
@@ -56,13 +66,17 @@ export {
  * - {@link IntersectionObserverSecondo}
  * - {@link ResizeObserverSecondo}
  * - {@link EmitterSecondo} — Adapts DOM EventTargets or Node.js EventEmitters.
- * @module secondo 
-*/
+ * @module secondo
+ */
 
 /**
- * - {@link Secondo} — A player that echoes/adapts events from external sources.
- * - {@link Cue} — A note in time: listens to an external source and triggers reactions.
- * - {@link Ticket}
- * - {@link Ostinato}
+ * 🎵 Player module
+ *
+ * Specialized Player types that encapsulate different forms of timed or event-driven behaviors:
+ *
+ * - {@link Secondo} — Adapts and echoes events from external sources.
+ * - {@link Cue} — Reacts to an external event once or repeatedly.
+ * - {@link Appointment} — A scheduled event that fires at a specific time.
+ * - {@link Ostinato} — A repeating task with configurable timing and repetitions.
  * @module player
  */

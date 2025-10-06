@@ -1,7 +1,7 @@
 import { Ensemble } from './Ensemble.js';
 import { Cue } from "../player/Cue.js";
 import { Ostinato } from "../player/Ostinato.js";
-import { Ticket } from '../player/Ticket.js';
+import { Appointment } from '../player/Appointment.js';
 
 /**
  * Solo 🎭
@@ -11,7 +11,7 @@ import { Ticket } from '../player/Ticket.js';
  * It aggregates three types of internal players:
  * - **Cues**: reactive listeners to external events
  * - **Ostinatos**: repeating, infinite or finite tasks
- * - **Tickets**: time-limited objects affecting the behavior (e.g. OTPs)
+ * - **Appointments**: scheduled events that fire at specific times
  *
  * Calling `play()` or `pause()` on a Solo toggles all its internal players.
  * External source emitters are unaffected; only the internal players are controlled.
@@ -24,20 +24,20 @@ export class Solo extends Ensemble {
    * Initializes three internal ensembles to manage:
    * - `cues`: reactive event listeners
    * - `ostinatos`: repeating tasks
-   * - `tickets`: time-limited objects
+   * - `agenda`: scheduled appointments
    *
    * These internal ensembles are automatically managed by `play()` and `pause()`.
    */
   constructor() {
     super();
 
-    // Internal ensembles for cues, ostinatos, and tickets
+    // Internal ensembles for cues, ostinatos, and appointments
     this.add('cues', new Ensemble())
         .add('ostinatos', new Ensemble())
-        .add('tickets', new Ensemble());
+        .add('agenda', new Ensemble());
   }
 
-  /** Internal Ensemble of Cues*/
+  /** Internal Ensemble of Cues */
   get cues() {
     return this.get('cues');
   }
@@ -47,9 +47,9 @@ export class Solo extends Ensemble {
     return this.get('ostinatos');
   }
 
-  /** Internal Ensemble of Tickets */
-  get tickets() {
-    return this.get('tickets');
+  /** Internal Ensemble of Appointments */
+  get agenda() {
+    return this.get('agenda');
   }
 
   /**
@@ -84,15 +84,16 @@ export class Solo extends Ensemble {
   }
 
   /**
-   * Adds a Ticket (time-limited Player) to this Solo.
+   * Adds an Appointment (scheduled event) to this Solo's agenda.
    *
-   * @param {string} name Name of the Ticket
-   * @param {number} endTime Expiration timestamp in milliseconds
-   * @param {boolean} [exit=true] Whether to remove the Ticket from the Ensemble upon expiration
+   * @param {string} name Name of the Appointment
+   * @param {number} time Timestamp in milliseconds when the appointment should fire
+   * @param {string} eventName Event name to emit on trigger
+   * @param {any} [payload] Optional payload for the event
    * @returns {this} Returns the Solo instance for chaining
    */
-  ticket(name, endTime, exit = true) {
-    this.tickets.add(name, new Ticket(endTime, exit));
+  appointment(name, time, eventName, payload) {
+    this.agenda.add(name, new Appointment(time, eventName, payload));
     return this;
   }
 }
