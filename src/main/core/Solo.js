@@ -37,17 +37,17 @@ export class Solo extends Ensemble {
         .add('tickets', new Ensemble());
   }
 
-  /** @type {Ensemble<Cue>} Internal collection of Cues */
+  /** Internal Ensemble of Cues*/
   get cues() {
     return this.get('cues');
   }
 
-  /** @type {Ensemble<Ostinato>} Internal collection of Ostinatos */
+  /** Internal Ensemble of Ostinatos */
   get ostinatos() {
     return this.get('ostinatos');
   }
 
-  /** @type {Ensemble<Ticket>} Internal collection of Tickets */
+  /** Internal Ensemble of Tickets */
   get tickets() {
     return this.get('tickets');
   }

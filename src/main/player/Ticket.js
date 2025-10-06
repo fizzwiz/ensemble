@@ -39,6 +39,14 @@ export class Ticket extends Player {
   }
 
   /**
+   * Checks if this Ticket is still valid.
+   * @returns {boolean} True if the current time is before `endTime`.
+   */
+  isValid() {
+    return Date.now() < this.endTime;
+  }
+  
+  /**
    * Remaining lifetime in milliseconds
    * @returns {number}
    */
