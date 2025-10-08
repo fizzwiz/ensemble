@@ -1,5 +1,4 @@
 import { Secondo } from "../player/Secondo.js";
-import { Event } from "../core/Event.js";
 
 /**
  * Abstract base class for all DOM observer Secondos.
@@ -16,18 +15,13 @@ export class ObserverSecondo extends Secondo {
    * @param {object} [opts={}] - Options passed to the observer (ignored by some observers).
    */
   constructor(observed, opts = {}) {
-    super();
+    super(undefined, opts);
+
     /** @type {Node[]} */
     this.observed = Array.isArray(observed) ? observed : [observed];
 
-    /** @type {object} */
-    this.opts = opts;
-
     /** @type {MutationObserver|IntersectionObserver|ResizeObserver|null} */
     this.primo = null;
-
-    /** @type {boolean} */
-    this.playing = false;
   }
 
   /**
@@ -74,7 +68,8 @@ export class ObserverSecondo extends Secondo {
     if (!this.observed.length) throw new Error("No target nodes specified");
     if (!this.observer) this.instantiateObserver();
     this.connectObserver();
-    this.playing = true;
+    super.play();
+    return this;
   }
 
   /**
@@ -82,7 +77,8 @@ export class ObserverSecondo extends Secondo {
    */
   pause() {
     this.disconnectObserver();
-    this.playing = false;
+    super.pause();
+    return this;
   }
 }
 
@@ -93,15 +89,9 @@ export class ObserverSecondo extends Secondo {
 export class MutationObserverSecondo extends ObserverSecondo {
   instantiateObserver() {
     this.primo = new MutationObserver((mutations) => {
-      mutations.forEach(mutation => this.emit("mutation", new MutationEvent(this, mutation)));
+      mutations.forEach(mutation => this.emit("mutation", mutation));
     });
   }
-}
-
-export class MutationEvent extends Event {
-    constructor(secondo, mutation) {
-        super(secondo, 'mutation', [], mutation);
-    }
 }
 
 /**
@@ -119,14 +109,8 @@ export class IntersectionObserverSecondo extends ObserverSecondo {
 
   instantiateObserver() {
     this.primo = new IntersectionObserver((entries) => {
-      entries.forEach(entry => this.emit("intersection", new IntersectionObserverEntry(this, entry)));
+      entries.forEach(entry => this.emit("intersection", entry));
     }, this.opts);
-  }
-}
-
-export class IntersectionEvent extends Event {
-  constructor(secondo, record) {
-      super(secondo, 'intersection', [], record);
   }
 }
 
@@ -137,13 +121,7 @@ export class IntersectionEvent extends Event {
 export class ResizeObserverSecondo extends ObserverSecondo {
   instantiateObserver() {
     this.primo = new ResizeObserver((entries) => {
-      entries.forEach(entry => this.emit("resize", new ResizeEvent(this, entry)));
+      entries.forEach(entry => this.emit("resize", entry));
     });
-  }
-}
-
-export class ResizeEvent extends Event {
-  constructor(secondo, record) {
-      super(secondo, 'resize', [], record);
   }
 }

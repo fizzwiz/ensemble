@@ -1,5 +1,4 @@
 import { EventEmitter } from 'events';
-import { Event } from './Event.js';
 
 /**
  * Base class for all participants in an Ensemble.
@@ -62,7 +61,7 @@ export class Player extends EventEmitter {
 	
 		this[name] = value;
 	
-		this.emit(new PropertyChangeEvent(this, name, oldValue, value));
+		this.emit('propertyChanged', name, oldValue, value);
 	
 		return this;
 	}  
@@ -70,49 +69,18 @@ export class Player extends EventEmitter {
 	/**
 	 * Emits an event from this Player and bubbles it up to the Ensemble, if present.
 	 *
-	 * The event is wrapped in a custom `Event` object containing the emitter, type,
-	 * arguments, and (if propagated) the source event. When part of an ensemble,
-	 * the ensemble receives a new propagated Event referencing the original.
-	 *
 	 * @param {string | symbol} event - The event type.
 	 * @param {...any} args - Arguments to include in the event.
 	 * @returns {Player} This player (for chaining).
 	 */
 	emit(event, ...args) {
-		const srcEvent = new Event(this, event, args);
-		super.emit(event, srcEvent);		
+		super.emit(event, ...args);		
 	
-		if (this.ensemble) {
-			const bubbled = new Event(this.ensemble, event, [], srcEvent);
-			this.ensemble.emit(event, bubbled);
-		}
+		this.ensemble?.emit(event, ...args);
 	
 		return this;
 	}
   
 }
 
-
-export class PropertyChangeEvent extends Event {
-  
-	constructor(emitter, propertyName, oldValue, newValue) {
-	  super(emitter, 'propertychange', [propertyName, oldValue, newValue]);
-	}
-  
-	get propertyName() {
-	  return this.args[0];
-	}
-  
-	get oldValue() {
-	  return this.args[1];
-  
-	}
-  
-	get newValue() {
-	  return this.args[2];
-	  
-	}
-  }
-  
-  
   

@@ -14,9 +14,11 @@ export class Secondo extends Player {
    * Constructs a Secondo instance.
    *
    * @param {*} primo - The original event emitter to adapt.
+   * @param {Object} [opts = {}] - Optional configuration properties
    */
-  constructor(primo) {
+  constructor(primo, opts = {}) {
     super();
     this.primo = primo;
+    this.opts = { ...opts };
   }
 }

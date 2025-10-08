@@ -1,7 +1,6 @@
 // Core abstractions
 import { Player } from './core/Player.js';
 import { Ensemble } from './core/Ensemble.js';
-import { Event } from './core/Event.js';
 import { Solo } from './core/Solo.js';
 
 // Player types
@@ -23,7 +22,6 @@ export {
   // Core
   Player,
   Ensemble,
-  Event,
   Solo,
 
   // Player types
@@ -44,11 +42,10 @@ export {
  * 🎼 Core module
  *
  * Provides the foundational abstractions of the `@fizzwiz/ensemble` framework.
- * These classes form the "score" on which other parts of the system perform:
+ * These classes form the "core" on which other parts of the system perform:
  *
  * - {@link Player} — Base performer with a lifecycle (`play()`, `pause()`).
  * - {@link Ensemble} — A group of players performing together in coordination.
- * - {@link Event} — Rich event objects that track origin and propagation.
  * - {@link Solo} — Self-contained performer orchestrating internal cues like a miniature ensemble.
  * @module core
  */

@@ -1,125 +1,99 @@
 import { Secondo } from '../player/Secondo.js';
 import { Cue } from '../player/Cue.js';
-import { Event } from '../core/Event.js';
 
 /**
- * EmitterSecondo
- * --------------
+ * EmitterSecondo 🎶
+ * ----------------
  * A specialized `Secondo` that adapts external event sources —
- * either a DOM `EventTarget` (e.g. HTMLElement) or a Node.js-style `EventEmitter` —
+ * either a DOM `EventTarget` or a Node.js-style `EventEmitter` —
  * into the Ensemble system.
  *
  * Responsibilities:
  * - Attaches to an external emitter and listens for configured events.
- * - Maps raw event types and arguments into one or more semantic Ensemble events.
- * - Wraps each emitted event into an `Event` object for uniform handling.
+ * - Re-emits incoming events to the Ensemble hierarchy.
+ * - Appends itself as the last argument to propagated events, allowing
+ *   listeners to access both the `EmitterSecondo` and the underlying emitter.
  *
  * Example usage:
  * ```js
- * const button = document.querySelector("button");
- * const buttonSecondo = new EmitterSecondo(button, ["click"]);
+ * const button = document.querySelector('button');
+ * const buttonSecondo = new EmitterSecondo(button, ['click']);
  *
- * buttonSecondo.on("click", (evt) => {
- *   console.log("Button clicked:", evt);
+ * buttonSecondo.on('click', (event, secondo) => {
+ *   console.log('Clicked element:', secondo.primo);
  * });
  *
- * buttonSecondo.play(); // starts listening
+ * buttonSecondo.play();
  * ```
  */
 export class EmitterSecondo extends Secondo {
-  /**
-   * The list of event names to listen to from the underlying emitter.
-   * @type {string[]}
-   */
+  /** Names of events to listen to on the emitter @type {string[]} */
   events;
 
-  /**
-   * Function mapping a raw event type (and optional args) into one or more semantic event names.
-   * This allows splitting or remapping generic events (e.g. `"message"`) into multiple cues
-   * (e.g. `["chat", "system"]`).
-   *
-   * @type {function(string, ...*): string[]}
-   */
-  subTypeMapper;
+  /** Immutable collection of internal Cue instances @type {Cue[]} */
+  _cues;
 
   /**
-   * Bound event handler references for each configured event.
-   * Used for add/remove listener symmetry.
-   *
-   * @type {Function[]}
-   * @private
+   * @param {EventTarget|EventEmitter} emitter - The source of events.
+   * @param {string[]} events - List of event names to listen for.
+   * @param {object} [opts={}] - Optional configuration for Cue listeners.
    */
-  _eventHandlers;
+  constructor(emitter, events, opts = {}) {
+    super(emitter, opts);
 
-  /**
-   * Extra options passed to `Cue.addListener` / `Cue.removeListener`.
-   * @type {object}
-   * @private
-   */
-  _opts;
+    this.events = [...events]
 
-  /**
-   * @param {EventTarget|EventEmitter} emitter - The event source.
-   * @param {string[]} events - The list of event names to listen to.
-   * @param {function(string, ...args) : string[]} [mapEventToSubtypes] - Optional mapper function to derive sub-event names.
-   * @param {object} [opts={}] - Extra options for attaching/removing listeners.
-   */
-  constructor(emitter, events, mapEventToSubtypes = (type, ...args) => [type], opts = {}) {
-    super(emitter);
-
-    this.events = events;
-    this.subTypeMapper = mapEventToSubtypes;
-    this._opts = opts;
-
-    // Pre-bind handlers for proper attach/detach symmetry
-    this._eventHandlers = events.map(event =>
-      this.propagate.bind(this, event)
+    // Pre-create Cue instances bound to propagate, immutable for safety
+    this._cues = Object.freeze(
+      events.map(event => new Cue(emitter, event, this.propagate.bind(this, event), this.opts))
     );
+
   }
 
   /**
-   * Starts listening to the configured events on the emitter.
-   * Enables this Secondo to participate in cue propagation.
+   * Read-only access to internal Cue instances.
+   * @returns {Cue[]}
    */
-  play() {
-    let i = 0;
-    for (const event of this.events) {
-      Cue.addListener(this.primo, event, this._eventHandlers[i++], this._opts);
-    }
-    this.playing = true;
+  get cues() {
+    return this._cues;
   }
 
   /**
-   * Stops listening to the configured events on the emitter.
+   * Starts listening to all configured events.
    * Safe to call multiple times.
-   */
-  pause() {
-    let i = 0;
-    for (const event of this.events) {
-      Cue.removeListener(this.primo, event, this._eventHandlers[i++], this._opts);
-    }
-    this.playing = false;
-  }
-
-  /**
-   * Propagates an incoming raw event by mapping it into one or more semantic Ensemble events.
-   *
-   * Each mapped sub-event is re-emitted from this Secondo as an `Event` instance,
-   * preserving the original event and its arguments.
-   *
-   * @param {string} srcEventName - The raw source event name.
-   * @param {...any} args - Arguments accompanying the source event.
    * @returns {this}
    */
-  propagate(srcEventName, ...args) {
-    const subEvents = this.subTypeMapper(srcEventName, ...args);
-    const srcEvent = new Event(this.primo, srcEventName, args);
+  play() {
+    if (this.playing) return this;
+    this.cues.forEach(cue => cue.play());
+    super.play();
+    return this;
+  }
 
-    for (const eventName of subEvents) {
-      const wrapped = new Event(this, eventName, [], srcEvent);
-      this.emit(eventName, wrapped);
-    }
+  /**
+   * Stops listening to all configured events.
+   * Safe to call multiple times.
+   * @returns {this}
+   */
+  pause() {
+    if (!this.playing) return this;
 
+    this.cues.forEach(cue => cue.pause());
+    super.pause();
+    return this;
+  }
+
+  /**
+   * Propagates an event to the Ensemble hierarchy.
+   * Appends this `EmitterSecondo` as the last argument for reference.
+   *
+   * @param {string} event - Event name.
+   * @param {...any} args - Arguments from the source event.
+   * @returns {this}
+   */
+  propagate(event, ...args) {
+    this.emit(event, ...args, this);
     return this;
   }
 }
+
