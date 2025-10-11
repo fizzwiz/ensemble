@@ -80,6 +80,32 @@ export class Player extends EventEmitter {
 	
 		return this;
 	}
+
+  /**
+   * Emits an event and logs it to the console in a structured, readable way.
+   *
+   * - Logs the event name, timestamp, and all arguments.
+   * - Objects are logged directly (not stringified), preserving their structure.
+   * - Errors are clearly shown in the log output.
+   *
+   * @param {string} event - The event name (e.g., "info", "error", "state").
+   * @param {...any} args - Arguments to log and emit with the event.
+   *
+   * @example
+   * this.notify("info", "Connected successfully");
+   * this.notify("error", new Error("Connection failed"));
+   * this.notify("state", { id: "sprite42", vibes: 5 });
+   */
+  notify(event, ...args) {
+    const tag = `[${this.constructor.name}]`;
+    const time = new Date().toISOString();
+
+    console.log(`${time} ${tag} ${event}:`, ...args);
+
+    this.emit(event, ...args);
+  }
+
+	  
   
 }
 
