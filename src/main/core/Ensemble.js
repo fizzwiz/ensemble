@@ -13,6 +13,11 @@ export class Ensemble extends Player {
     this.players = new Map();
   }
 
+  /** Iterates this Ensemble */
+  [Symbol.iterator]() {
+    return this.players.values();
+  }
+
   /**
    * Adds a Player to this Ensemble with a unique name.
    * The Player's `name` and `ensemble` properties are set automatically.
