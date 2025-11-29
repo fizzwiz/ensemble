@@ -10,12 +10,6 @@ import { Appointment } from './player/Appointment.js';
 import { Ostinato } from './player/Ostinato.js';
 
 // Secondo adapters
-import {
-  ObserverSecondo,
-  MutationObserverSecondo,
-  IntersectionObserverSecondo,
-  ResizeObserverSecondo
-} from './secondo/ObserverSecondo.js';
 import { EmitterSecondo } from './secondo/EmitterSecondo.js';
 
 export {
@@ -30,11 +24,7 @@ export {
   Appointment,
   Ostinato,
 
-  // Secondo adapters
-  ObserverSecondo,
-  MutationObserverSecondo,
-  IntersectionObserverSecondo,
-  ResizeObserverSecondo,
+  // Secondo adapter
   EmitterSecondo
 };
 

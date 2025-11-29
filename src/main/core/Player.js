@@ -61,7 +61,7 @@ export class Player extends EventEmitter {
 	
 		this[name] = value;
 	
-		this.emit('propertyChanged', name, oldValue, value);
+		this.emit('propertyChanged', name, oldValue, value, this);
 	
 		return this;
 	}  
